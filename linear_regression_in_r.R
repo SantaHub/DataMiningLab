@@ -7,6 +7,7 @@ trainData <- a[split, ]#Now copy the split sample into trainData
 testData <- a[-split, ]#copy remaining sample into trainData
 predictionModel <- lm(PE ~ AT + V + AP + RH, data = trainData)
 summary(predictionModel)
+plot(testData$PE,prediction,col = c("blue","red"),main = "Solar power output prediction",abline(predictionModel),cex = 1.3,pch = 16)
 prediction <- predict(predictionModel, newdata = testData)
 print("Predicted Values")
 head(prediction)
