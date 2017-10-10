@@ -15,6 +15,6 @@ This Repostiory Contains all the Rapid Miner files and the R Code for Advanced D
   
   1. Choose Add Data from the repository tab and choose My Computer
   2. Select the dataset from the folder you've saved it
-  3.Choose next and when it asks where to save the data select local repository -> Data
+  3. Choose next and when it asks where to save the data select local repository -> Data
   
   Now you can see the data on the left side just drag and drop it into work space and connect it with the modules for execution
