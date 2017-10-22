@@ -13,27 +13,37 @@ import numpy as np
 junk = pd.read_csv('Karunya_ssp_20160105.csv')
 
 #If messy _feature SKIP. 
-messy_features=["RainDay","SolRadAcc","WDAvgDay","","WSMinDay","WSMaxDay","ATMinDay","ATMaxDay","RHMinDay","RHMaxDay" ]
+messy_features=["RainDay","SolRadAcc","WDAvgDay","WSMinDay","WSMaxDay","ATMinDay","ATMaxDay","RHMinDay","RHMaxDay" ]
 
-data=[]
+#Getting messy Index
+for x in messy_features:
+    messy_index+=list(np.where(junk['Features']==x)[0])
+
+data=junk[junk.Features != "RainDay"]
+for x in messy_features:
+    data=data[data.Features != x]
+
+junk=data.reindex()
+write=[]
 for x in range(0,len(junk),8):
     # Date and month
-    if (int(junk['Time'][x].split(':')[0]) == 0 )and (int(junk['Time'][x].split(':')[1]) == 0):
-        continue;
-    instance = junk['Date'][x].split('/')[1]+','+junk['Date'][x].split('/')[0]
+    instance = junk.iloc[x]['Date'].split('/')[1]+','+junk.iloc[x]['Date'].split('/')[0]
     # Time
-    if int(junk['Time'][x].split(':')[1])>0:
-        instance+=','+str(int(junk['Time'][x].split(':')[0])+0.5)
+    if int(junk.iloc[x]['Time'].split(':')[1])>0:
+        instance+=','+str(int(junk.iloc[x]['Time'].split(':')[0])+0.5)
     else : 
-        instance+=','+str(int(junk['Time'][x].split(':')[0]))
+        instance+=','+str(int(junk.iloc[x]['Time'].split(':')[0]))
         
     for y in range(x,x+8):
-        instance+=','+str(junk['Value'][y])
+        instance+=','+str(junk.iloc[y]['Value'])
     
-    data.append(instance)
+    write.append(instance)
     
     
-    
+data.to_csv('Karunya_data.csv',index=False)
+
 with open('Karunya_data.csv','w') as file:
-    for x in data:
-        file.writelines(x+'\n')
+    for x in write:
+        file.writelines(x)
+        file.writelines('\n')
+        
