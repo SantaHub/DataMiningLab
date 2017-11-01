@@ -1,0 +1,17 @@
+library(cluster)
+
+dv <- diana(iris, metric = "manhattan", stand = TRUE)
+print(dv)
+plot(dv)
+
+## Cut into 2 groups:
+dv2 <- cutree(as.hclust(dv), k = 2)
+table(dv2) # 8 and 42 group members
+rownames(votes.repub)[dv2 == 1]
+
+## For two groups, does the metric matter ?
+dv0 <- diana(votes.repub, stand = TRUE) # default: Euclidean
+dv.2 <- cutree(as.hclust(dv0), k = 2)
+table(dv2 == dv.2)## identical group assignments
+
+str(as.dendrogram(dv0)) # {via as.dendrogram.twins() method}
