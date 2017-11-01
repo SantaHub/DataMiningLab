@@ -41,14 +41,14 @@ def baseline_model():
     print("came")
 	# create model
     model = Sequential()
-    model.add(Dense(10, input_dim=10, kernel_initializer='normal', activation='relu'))
+    model.add(Dense(6, input_dim=10, kernel_initializer='normal', activation='relu'))
     model.add(Dense(1, kernel_initializer='normal'))
 	# Compile model
     model.compile(loss='mean_squared_error', optimizer='adam')
     return model
 
 from keras.wrappers.scikit_learn import KerasRegressor
-estimator = KerasRegressor(build_fn=baseline_model, nb_epoch=4, batch_size=5, verbose=0)
+estimator = KerasRegressor(build_fn=baseline_model, nb_epoch=100, batch_size=10, verbose=0)
 
 from sklearn.model_selection import KFold
 from sklearn.model_selection import cross_val_score

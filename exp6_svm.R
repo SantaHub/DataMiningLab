@@ -1,5 +1,7 @@
 #SVM
 
+setwd("~/ML/LAB_ADML_temp/data")
+
 #import dataset
 dataset = read.csv('auto-mpg.csv')
 
