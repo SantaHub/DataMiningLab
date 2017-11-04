@@ -21,10 +21,17 @@ predictions <- predict(model,df$inputsTest)
 plotRegressionError(df$targetsTest[,2], predictions[,2])
 
 confusionMatrix(df$targetsTrain,fitted.values(model))
-confusionMatrix(df$targetsTest,predictions)
+cm <- confusionMatrix(df$targetsTest,predictions)
+sum=0
+for(row in 1:nrow(cm)) {
+    sum = sum+(cm[row, row])
+}
+
+sprintf("Accuracy is : %f", (sum/nrow(df$targetsTest))*100 )
 
 plotROC(fitted.values(model)[,2], df$targetsTrain[,2])
 plotROC(predictions[,2], df$targetsTest[,2])
 
 confusionMatrix(df$targetsTrain, encodeClassLabels(fitted.values(model),method="402040", l=0.4, h=0.6))
+
 
